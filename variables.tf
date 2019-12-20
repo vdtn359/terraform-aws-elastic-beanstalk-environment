@@ -125,6 +125,12 @@ variable "autoscale_min" {
   description = "Minumum instances to launch"
 }
 
+variable "launch_configuration_security_group_id" {
+  type        = string
+  default     = ""
+  description = "Default launch configuration security group"
+}
+
 variable "autoscale_max" {
   type        = number
   default     = 3

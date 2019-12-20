@@ -299,6 +299,7 @@ resource "aws_iam_instance_profile" "ec2" {
 }
 
 resource "aws_security_group" "default" {
+  count = var.launch_configuration_security_group_id == "" ? 1 : 0
   name        = module.label.id
   description = "Allow inbound traffic from provided Security Groups"
 
@@ -534,7 +535,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "SecurityGroups"
-    value     = aws_security_group.default.id
+    value     = var.launch_configuration_security_group_id != "" ? var.launch_configuration_security_group_id : aws_security_group.default[0].id
   }
 
   setting {
